@@ -27,10 +27,12 @@ const features = [
 ];
 
 const prices = [
-  { name: "ขนมนุ่มนิ่ม 1 ชิ้น", note: "ลองชิมก่อนได้", price: "5", highlight: false },
-  { name: "ชุด 10 ชิ้น", note: "แบ่งกินได้ทั้งอาทิตย์", price: "50", highlight: true },
-  { name: "ชุด 20 ชิ้น", note: "เหมาะกับงานวันเกิด แจกเพื่อน ๆ", price: "100", highlight: false },
+  { name: "ขนมนุ่มนิ่ม 1 ชิ้น", note: "ลองชิมก่อนได้", price: "5", highlight: false, art: <ArtSingle /> },
+  { name: "ชุด 10 ชิ้น", note: "แบ่งกินได้ทั้งอาทิตย์", price: "50", highlight: true, art: <ArtBag /> },
+  { name: "ชุด 20 ชิ้น", note: "เหมาะกับงานวันเกิด แจกเพื่อน ๆ", price: "100", highlight: false, art: <ArtBox /> },
 ];
+
+const candyColors = ["var(--pink)", "#f6c343", "#4cc59a", "#6cb6f5", "#b58cf0", "#ff9a6b"];
 
 const faqs = [
   {
@@ -143,6 +145,13 @@ export default function Home() {
                       ยอดนิยม
                     </span>
                   )}
+                  <div
+                    className={`mx-auto mb-4 grid aspect-[4/3] w-full max-w-56 place-items-center rounded-2xl ${
+                      p.highlight ? "bg-white/20" : "bg-blush"
+                    }`}
+                  >
+                    {p.art}
+                  </div>
                   <h3 className={`font-display text-xl font-bold ${p.highlight ? "text-white" : "text-berry"}`}>
                     {p.name}
                   </h3>
@@ -305,6 +314,66 @@ function HeroArt() {
         <circle cx="270" cy="150" r="8" fill="var(--pink)" opacity=".5" />
       </svg>
     </div>
+  );
+}
+
+/* ขนม 1 ชิ้น หน้ายิ้ม */
+function CandyPiece({ x, y, color, r = 0, s = 1 }: { x: number; y: number; color: string; r?: number; s?: number }) {
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`}>
+      <rect x="-22" y="-18" width="44" height="36" rx="14" fill={color} />
+      <rect x="-15" y="-13" width="12" height="6" rx="3" fill="#fff" opacity=".55" />
+      <circle cx="-7" cy="0" r="2.6" fill="var(--berry)" />
+      <circle cx="7" cy="0" r="2.6" fill="var(--berry)" />
+      <path d="M-5 6 Q0 10 5 6" stroke="var(--berry)" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function ArtSingle() {
+  return (
+    <svg viewBox="0 0 160 120" className="h-full w-full" role="img" aria-label="ขนมนุ่มนิ่ม 1 ชิ้น">
+      <ellipse cx="80" cy="96" rx="36" ry="6" fill="var(--berry)" opacity=".12" />
+      <CandyPiece x={80} y={62} color="var(--pink)" r={-8} s={1.7} />
+      <path d="M128 26 l3 6 6 1 -4.5 4 1 6 -5.5 -3 -5.5 3 1 -6 -4.5 -4 6 -1z" fill="#f6c343" />
+      <circle cx="34" cy="34" r="4" fill="#4cc59a" />
+      <circle cx="132" cy="88" r="3" fill="#6cb6f5" />
+    </svg>
+  );
+}
+
+function ArtBag() {
+  return (
+    <svg viewBox="0 0 160 120" className="h-full w-full" role="img" aria-label="ขนมนุ่มนิ่ม ชุด 10 ชิ้น">
+      <ellipse cx="80" cy="108" rx="44" ry="6" fill="var(--berry)" opacity=".15" />
+      {/* ถุงใส */}
+      <path d="M44 30 h72 l6 72 a6 6 0 0 1 -6 6 H44 a6 6 0 0 1 -6 -6z" fill="#fff" opacity=".9" />
+      <path d="M40 22 h80 v10 H40z" fill="var(--pink-deep)" />
+      <path d="M68 22 q12 -14 24 0" stroke="var(--pink-deep)" strokeWidth="4" fill="none" />
+      {[0, 1, 2, 3, 4, 5].map((i) => (
+        <CandyPiece key={i} x={58 + (i % 3) * 22} y={56 + Math.floor(i / 3) * 28} color={candyColors[i]} r={(i % 2 ? 1 : -1) * 10} s={0.5} />
+      ))}
+      <rect x="54" y="38" width="52" height="10" rx="5" fill="var(--lemon)" />
+      <text x="80" y="46" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--berry)">x10</text>
+    </svg>
+  );
+}
+
+function ArtBox() {
+  return (
+    <svg viewBox="0 0 160 120" className="h-full w-full" role="img" aria-label="ขนมนุ่มนิ่ม ชุด 20 ชิ้น">
+      <ellipse cx="80" cy="110" rx="56" ry="6" fill="var(--berry)" opacity=".12" />
+      {/* ขนมกองอยู่บนกล่อง */}
+      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
+        <CandyPiece key={i} x={38 + i * 14} y={i % 2 ? 44 : 52} color={candyColors[i % candyColors.length]} r={(i % 2 ? 1 : -1) * 14} s={0.48} />
+      ))}
+      <rect x="26" y="58" width="108" height="48" rx="10" fill="var(--pink)" />
+      <rect x="26" y="58" width="108" height="12" rx="6" fill="var(--pink-deep)" />
+      <rect x="74" y="58" width="12" height="48" fill="var(--lemon)" />
+      <path d="M80 58 q-18 -16 -22 -4 q2 8 22 4 q18 -16 22 -4 q-2 8 -22 4" fill="#f6c343" />
+      <text x="50" y="94" textAnchor="middle" fontSize="11" fontWeight="700" fill="#fff">x20</text>
+      <circle cx="112" cy="88" r="5" fill="#fff" opacity=".6" />
+    </svg>
   );
 }
 
