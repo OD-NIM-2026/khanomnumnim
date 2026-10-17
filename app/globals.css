@@ -1,0 +1,51 @@
+@import "tailwindcss";
+
+/* ===== สีและขนาดตัวอักษรของทั้งเว็บ (แก้ที่นี่ที่เดียว) ===== */
+:root {
+  --cream: #fff8f3;
+  --blush: #ffe4ec;
+  --pink: #f472a6;
+  --pink-deep: #d9468a;
+  --berry: #7a2a4f;
+  --ink: #4a2c3a;
+  --muted: #8a6575;
+  --mint: #c9f0e0;
+  --lemon: #fff1b8;
+  --sky: #d6ecff;
+  --line: #06c755;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-blush: var(--blush);
+  --color-pink: var(--pink);
+  --color-pink-deep: var(--pink-deep);
+  --color-berry: var(--berry);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-mint: var(--mint);
+  --color-lemon: var(--lemon);
+  --color-sky: var(--sky);
+  --color-line: var(--line);
+
+  --font-sans: var(--font-body);
+  --font-display: var(--font-heading);
+
+  /* ขนาดตัวอักษร */
+  --text-hero: clamp(2.5rem, 9vw, 4.5rem);
+  --text-hero--line-height: 1.25;
+  --text-title: clamp(1.75rem, 5vw, 2.5rem);
+  --text-title--line-height: 1.35;
+  --text-lead: clamp(1.125rem, 3.2vw, 1.375rem);
+  --text-lead--line-height: 1.7;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--cream);
+  color: var(--ink);
+  line-height: 1.7;
+}
