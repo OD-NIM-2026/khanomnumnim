@@ -136,7 +136,7 @@ export default function Home() {
               {prices.map((p) => (
                 <div
                   key={p.name}
-                  className={`relative rounded-3xl p-6 text-center ${
+                  className={`candy-card relative rounded-3xl p-6 text-center ${
                     p.highlight ? "bg-pink text-white shadow-lg shadow-pink/30" : "bg-white shadow-sm"
                   }`}
                 >
@@ -292,40 +292,70 @@ function HeroArt() {
       <svg viewBox="0 0 300 300" className="relative h-full w-full" aria-hidden="true">
         {/* ลูกอมชมพูตรงกลาง */}
         <g transform="translate(150 150) rotate(-15)">
-          <path d="M-62 0 L-100 -30 L-96 0 L-100 30 Z" fill="var(--pink)" />
-          <path d="M62 0 L100 -30 L96 0 L100 30 Z" fill="var(--pink)" />
-          <circle r="64" fill="var(--pink)" />
-          <path d="M-40 -48 Q0 0 -40 48" stroke="#fff" strokeWidth="10" fill="none" opacity=".6" strokeLinecap="round" />
-          <path d="M0 -64 Q40 0 0 64" stroke="#fff" strokeWidth="10" fill="none" opacity=".6" strokeLinecap="round" />
-          <circle cx="-22" cy="-8" r="6" fill="var(--berry)" />
-          <circle cx="22" cy="-8" r="6" fill="var(--berry)" />
-          <path d="M-14 14 Q0 28 14 14" stroke="var(--berry)" strokeWidth="5" fill="none" strokeLinecap="round" />
-          <circle cx="-36" cy="10" r="7" fill="#fff" opacity=".5" />
-          <circle cx="36" cy="10" r="7" fill="#fff" opacity=".5" />
+          <g className="wiggle">
+            <path d="M-62 0 L-100 -30 L-96 0 L-100 30 Z" fill="var(--pink)" />
+            <path d="M62 0 L100 -30 L96 0 L100 30 Z" fill="var(--pink)" />
+            <circle r="64" fill="var(--pink)" />
+            <path d="M-40 -48 Q0 0 -40 48" stroke="#fff" strokeWidth="10" fill="none" opacity=".6" strokeLinecap="round" />
+            <path d="M0 -64 Q40 0 0 64" stroke="#fff" strokeWidth="10" fill="none" opacity=".6" strokeLinecap="round" />
+            <g className="blink">
+              <circle cx="-22" cy="-8" r="6" fill="var(--berry)" />
+              <circle cx="22" cy="-8" r="6" fill="var(--berry)" />
+            </g>
+            <path d="M-14 14 Q0 28 14 14" stroke="var(--berry)" strokeWidth="5" fill="none" strokeLinecap="round" />
+            <circle cx="-36" cy="10" r="7" fill="#fff" opacity=".5" />
+            <circle cx="36" cy="10" r="7" fill="#fff" opacity=".5" />
+          </g>
         </g>
-        {/* ขนมชิ้นเล็กรอบ ๆ */}
-        <rect x="36" y="44" width="46" height="46" rx="14" fill="var(--mint)" transform="rotate(-12 59 67)" />
-        <rect x="222" y="212" width="44" height="44" rx="14" fill="var(--sky)" transform="rotate(14 244 234)" />
-        <circle cx="244" cy="62" r="24" fill="var(--lemon)" />
-        <circle cx="244" cy="62" r="10" fill="#fff" opacity=".7" />
-        <circle cx="58" cy="236" r="20" fill="var(--lemon)" />
-        <path d="M150 18 l6 12 13 2 -9 9 2 13 -12 -6 -12 6 2 -13 -9 -9 13 -2z" fill="var(--pink-deep)" opacity=".8" />
-        <circle cx="34" cy="150" r="6" fill="var(--pink-deep)" opacity=".5" />
-        <circle cx="270" cy="150" r="8" fill="var(--pink)" opacity=".5" />
+        {/* ขนมชิ้นเล็กรอบ ๆ ลอยขึ้นลง */}
+        <g className="float" style={{ animationDelay: "-0.5s" }}>
+          <rect x="36" y="44" width="46" height="46" rx="14" fill="var(--mint)" transform="rotate(-12 59 67)" />
+        </g>
+        <g className="float" style={{ animationDelay: "-1.6s" }}>
+          <rect x="222" y="212" width="44" height="44" rx="14" fill="var(--sky)" transform="rotate(14 244 234)" />
+        </g>
+        <g className="float" style={{ animationDelay: "-2.2s" }}>
+          <circle cx="244" cy="62" r="24" fill="var(--lemon)" />
+          <circle cx="244" cy="62" r="10" fill="#fff" opacity=".7" />
+        </g>
+        <g className="float" style={{ animationDelay: "-1s" }}>
+          <circle cx="58" cy="236" r="20" fill="var(--lemon)" />
+        </g>
+        <path className="twinkle" d="M150 18 l6 12 13 2 -9 9 2 13 -12 -6 -12 6 2 -13 -9 -9 13 -2z" fill="var(--pink-deep)" opacity=".8" />
+        <circle className="twinkle" style={{ animationDelay: "-0.7s" }} cx="34" cy="150" r="6" fill="var(--pink-deep)" opacity=".5" />
+        <circle className="twinkle" style={{ animationDelay: "-1.4s" }} cx="270" cy="150" r="8" fill="var(--pink)" opacity=".5" />
       </svg>
     </div>
   );
 }
 
 /* ขนม 1 ชิ้น หน้ายิ้ม */
-function CandyPiece({ x, y, color, r = 0, s = 1 }: { x: number; y: number; color: string; r?: number; s?: number }) {
+function CandyPiece({
+  x,
+  y,
+  color,
+  r = 0,
+  s = 1,
+  delay = 0,
+}: {
+  x: number;
+  y: number;
+  color: string;
+  r?: number;
+  s?: number;
+  delay?: number;
+}) {
   return (
     <g transform={`translate(${x} ${y}) rotate(${r}) scale(${s})`}>
+      <g className="hop" style={{ animationDelay: `${delay}s` }}>
       <rect x="-22" y="-18" width="44" height="36" rx="14" fill={color} />
       <rect x="-15" y="-13" width="12" height="6" rx="3" fill="#fff" opacity=".55" />
-      <circle cx="-7" cy="0" r="2.6" fill="var(--berry)" />
-      <circle cx="7" cy="0" r="2.6" fill="var(--berry)" />
+      <g className="blink" style={{ animationDelay: `${delay * 2}s` }}>
+        <circle cx="-7" cy="0" r="2.6" fill="var(--berry)" />
+        <circle cx="7" cy="0" r="2.6" fill="var(--berry)" />
+      </g>
       <path d="M-5 6 Q0 10 5 6" stroke="var(--berry)" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      </g>
     </g>
   );
 }
@@ -335,9 +365,9 @@ function ArtSingle() {
     <svg viewBox="0 0 160 120" className="h-full w-full" role="img" aria-label="ขนมนุ่มนิ่ม 1 ชิ้น">
       <ellipse cx="80" cy="96" rx="36" ry="6" fill="var(--berry)" opacity=".12" />
       <CandyPiece x={80} y={62} color="var(--pink)" r={-8} s={1.7} />
-      <path d="M128 26 l3 6 6 1 -4.5 4 1 6 -5.5 -3 -5.5 3 1 -6 -4.5 -4 6 -1z" fill="#f6c343" />
-      <circle cx="34" cy="34" r="4" fill="#4cc59a" />
-      <circle cx="132" cy="88" r="3" fill="#6cb6f5" />
+      <path className="twinkle" d="M128 26 l3 6 6 1 -4.5 4 1 6 -5.5 -3 -5.5 3 1 -6 -4.5 -4 6 -1z" fill="#f6c343" />
+      <circle className="twinkle" style={{ animationDelay: "-0.8s" }} cx="34" cy="34" r="4" fill="#4cc59a" />
+      <circle className="twinkle" style={{ animationDelay: "-1.3s" }} cx="132" cy="88" r="3" fill="#6cb6f5" />
     </svg>
   );
 }
@@ -351,7 +381,7 @@ function ArtBag() {
       <path d="M40 22 h80 v10 H40z" fill="var(--pink-deep)" />
       <path d="M68 22 q12 -14 24 0" stroke="var(--pink-deep)" strokeWidth="4" fill="none" />
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <CandyPiece key={i} x={58 + (i % 3) * 22} y={56 + Math.floor(i / 3) * 28} color={candyColors[i]} r={(i % 2 ? 1 : -1) * 10} s={0.5} />
+        <CandyPiece key={i} x={58 + (i % 3) * 22} y={56 + Math.floor(i / 3) * 28} color={candyColors[i]} r={(i % 2 ? 1 : -1) * 10} s={0.5} delay={-i * 0.27} />
       ))}
       <rect x="54" y="38" width="52" height="10" rx="5" fill="var(--lemon)" />
       <text x="80" y="46" textAnchor="middle" fontSize="8" fontWeight="700" fill="var(--berry)">x10</text>
@@ -365,7 +395,7 @@ function ArtBox() {
       <ellipse cx="80" cy="110" rx="56" ry="6" fill="var(--berry)" opacity=".12" />
       {/* ขนมกองอยู่บนกล่อง */}
       {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-        <CandyPiece key={i} x={38 + i * 14} y={i % 2 ? 44 : 52} color={candyColors[i % candyColors.length]} r={(i % 2 ? 1 : -1) * 14} s={0.48} />
+        <CandyPiece key={i} x={38 + i * 14} y={i % 2 ? 44 : 52} color={candyColors[i % candyColors.length]} r={(i % 2 ? 1 : -1) * 14} s={0.48} delay={-i * 0.23} />
       ))}
       <rect x="26" y="58" width="108" height="48" rx="10" fill="var(--pink)" />
       <rect x="26" y="58" width="108" height="12" rx="6" fill="var(--pink-deep)" />
